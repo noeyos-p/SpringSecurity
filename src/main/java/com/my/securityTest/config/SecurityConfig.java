@@ -45,6 +45,10 @@ public class SecurityConfig {
         ex) 로봇이 아닙니다.
         위변조 방지를 요청을 함*/
 
+        http
+                .logout((auth) -> auth.logoutUrl("/logout")
+                        .logoutSuccessUrl("/"));
+        // 로그아웃 페이지에서 로그아웃이 정상적으로 되면 / 페이지로 돌아옴
 
 
         return http.build();
