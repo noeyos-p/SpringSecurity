@@ -4,13 +4,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
-public class securityConfig {
+public class SecurityConfig {
     // 비밀번호 암호 처리 기계 추가
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
@@ -45,6 +44,8 @@ public class securityConfig {
         로그인 정보를 이용해서 가상의 다른 사이트로 끌어들임
         ex) 로봇이 아닙니다.
         위변조 방지를 요청을 함*/
+
+
 
         return http.build();
     }
