@@ -2,6 +2,7 @@ package com.my.securityTest.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -9,6 +10,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity(prePostEnabled = true) // @PreAuthorize 활성화
 public class SecurityConfig {
     // 비밀번호 암호 처리 기계 추가
     @Bean
@@ -20,7 +22,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((auth) -> auth
-                        .requestMatchers("/", "/login", "/join", "/joinProc").permitAll()
+                        .requestMatchers("/", "/login", "/join", "/joinProc", "/home").permitAll()
                         // 누구나 다 볼 수 있게
                         .requestMatchers("/admin").hasRole("ADMIN")
                         // 액세스가 거부됨 -> 어드민 인증을 받아야 들어올 수 있음
@@ -32,6 +34,7 @@ public class SecurityConfig {
         http
                 .formLogin((auth) -> auth.loginPage("/login")
                         .loginProcessingUrl("/loginProc")
+                                .defaultSuccessUrl("/home",  true)
                         .permitAll()
                         // 로그인 아이디와 패스워드를 가로채감
                         /* html -> loginProc로 받아서 유저 아이디와 패스워드를 통해
